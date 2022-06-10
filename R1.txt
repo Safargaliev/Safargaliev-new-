@@ -1,0 +1,47 @@
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R1
+R1(config)#int fa0/0
+R1(config-if)#ip address 10.25.0.1 255.255.000.000
+R1(config-if)#no shut
+
+
+R1(config-if)#int se0/0/0
+R1(config-if)#ip address 81.30.199.5 255.255.255.252
+R1(config-if)#no shut
+
+
+R1(config-if)#int se0/0/1
+R1(config-if)#ip address 195.65.24.201 255.255.255.252
+R1(config-if)#no shut
+
+
+R1>sh ip route 
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/16 is subnetted, 1 subnets
+C       10.25.0.0 is directly connected, FastEthernet0/0
+     81.0.0.0/30 is subnetted, 1 subnets
+C       81.30.199.4 is directly connected, Serial0/0/0
+     195.65.24.0/30 is subnetted, 1 subnets
+C       195.65.24.200 is directly connected, Serial0/0/1
+
+R1>
+R1>en
+R1#conf t	
+R1(config)#route rip
+R1(config-router)#version 2
+R1(config-router)#on a
+R1(config-router)#no auto-summary
+R1(config-router)#network 10.25.0.0
+R1(config-router)#network 81.30.199.4
+R1(config-router)#network 195.65.24.200
